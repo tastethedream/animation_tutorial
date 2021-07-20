@@ -30,11 +30,16 @@ class _TripListState extends State<TripList> {
       Trip(title: 'Space Blast', price: '600', nights: '4', img: 'space.png'),
     ];
 
+    //delay by 100ms each time a new item is added to the trip list
+    Future ft = Future(() {});
     _trips.forEach((Trip trip) {
-      _tripTiles.add(_buildTile(trip));
-      //update current state of global key each time a tile is added
-      _listKey.currentState.insertItem(_tripTiles.length -1 );
-
+      ft = ft.then((_) {
+        return Future.delayed(const Duration(milliseconds: 100), () {
+          _tripTiles.add(_buildTile(trip));
+          //update current state of global key each time a tile is added
+          _listKey.currentState.insertItem(_tripTiles.length -1 );
+      });
+    });
     });
   }
 
